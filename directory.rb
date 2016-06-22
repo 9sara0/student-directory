@@ -24,7 +24,14 @@ def print_header
 end
 
 def print(students)
-  students.each_with_index() {|student, index| puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"}
+  puts "Please type in a letter to get a list of students whose name begins with that letter, type in 'all' to get the whole list"
+  intial_letter = gets.chomp
+  students.each_with_index() do |student, index|
+    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)" if intial_letter.upcase == "all".upcase
+    if student[:name].upcase[0] == intial_letter[0].upcase
+      puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+    end
+  end
 end
 
 def print_footer(students)
