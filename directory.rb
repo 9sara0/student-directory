@@ -49,7 +49,7 @@ def slected_first_letter_names(students)
   puts "Please type in a letter to get a list of students whose name begins with that letter."
   puts "Type in 'all' to get the complete list with all student names"
   intial_letter = gets.chomp
-  if intial_letter.upcase == "ALL"
+  if intial_letter.upcase == "ALL" || intial_letter.empty?
     return students
   else
   names_with_specified_letter = []
@@ -74,6 +74,29 @@ def shorter_than12(students)
 end
 
 
+def cohort_sort(students)
+  puts "Please type in a month to get the list of students from that cohort"
+  puts "Type in 'all' to get the complete list with all student names"
+  puts "Please remmeber if you hit return, you will get the default month cohort 'July'"
+  month = gets.chomp.capitalize.to_sym
+  while (!@months.include?(month)) && (!month.empty?) && (month.to_s.upcase != "ALL") do
+  puts "Please make sure that you enterd a correct full month"
+  month = gets.chomp.capitalize.to_sym
+  end
+  month = :July  if month.empty?
+
+  if month.to_s.upcase == "ALL"
+    return students
+  else
+    slected_list = students.select {|k| (k[:cohort].to_s.upcase == month.to_s.upcase)}
+  end
+#  to sort the sudents by their cohort: sorted_list = students.sort_by { |k| k[:cohort].to_s.upcase }
+end
+
+
+
+
+
 
 def print(students)
   line_width = 25
@@ -92,5 +115,5 @@ end
 
 students = input_students
 print_header
-print(students)
+print(cohort_sort(students))
 print_footer(students)
