@@ -1,15 +1,23 @@
 #!/usr/bin/env ruby
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
-
   students = []
+  puts "Please enter the list of the students"
+  puts "To finish, just hit return twice"
+  puts "please enter the student's name:"
   name = gets.chomp
 
   while !name.empty? do
-    students << {name: name, cohort: :november}
+    puts "please enter the student's hobbies"
+    hobbies = gets.chomp
+    puts "please enter the student's place of birth"
+    place_of_birth = gets.chomp
+    puts "please enter the student's hieght"
+    hieght = gets.chomp
+
+    students << {name: name, cohort: :november, hobbies: hobbies, place_of_birth: place_of_birth, hieght: hieght}
     puts "Now we have #{students.count} students"
 
+    puts "please enter the student's name:"
     name = gets.chomp
   end
   students
@@ -55,10 +63,8 @@ end
 
 
 def print(students)
-  counter = 0
-  while students.length > counter
-    puts " #{counter +1}. #{students[counter][:name]} (#{students[counter][:cohort]} cohort)"
-    counter += 1
+  students.each_with_index() do |student, index|
+    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) (hobbies: #{student[:hobbies]}) (place of birth: #{student[:place_of_birth]}) (hieght: #{student[:hieght]})"
   end
 end
 
