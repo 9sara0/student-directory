@@ -6,36 +6,35 @@ def input_students
   puts "Please enter the list of the students"
   puts "To finish, just hit return twice"
   puts "please enter the student's name:"
-  name = gets.chomp
+  name = gets.tr("\n","")
   cohort = :July # default
 
   while !name.empty? do
     puts "please enter the student's cohort, please type in a full month"
     puts "please be aware: if you did not enter any month then the defualt month is 'July'"
-    cohort = gets.chomp.capitalize.to_sym
+    cohort = gets.tr("\n","").capitalize.to_sym
     while (!@months.include?(cohort)) && (!cohort.empty?) do
     puts "Please make sure that you enterd a correct full month"
-    cohort = gets.chomp.capitalize.to_sym
+    cohort = gets.tr("\n","").capitalize.to_sym
     end
     cohort = :July  if cohort.empty?
 
     puts "please enter the student's hobbies"
-    hobbies = gets.chomp
+    hobbies = gets.tr("\n","")
     puts "please enter the student's place of birth"
-    place_of_birth = gets.chomp
+    place_of_birth = gets.tr("\n","")
     puts "please enter the student's hieght"
-    hieght = gets.chomp
+    hieght = gets.tr("\n","")
 
     students << {name: name, cohort: cohort, hobbies: hobbies, place_of_birth: place_of_birth, hieght: hieght}
-
     puts students.count == 1? "Now we have #{students.count} student" : "Now we have #{students.count} students"
 
+
     puts "please enter the student's name:"
-    name = gets.chomp
+    name = gets.tr("\n","")
   end
   students
 end
-
 
 
 
@@ -49,7 +48,7 @@ end
 def slected_first_letter_names(students)
   puts "Please type in a letter to get a list of students whose name begins with that letter."
   puts "Type in 'all' to get the complete list with all student names"
-  intial_letter = gets.chomp
+  intial_letter = gets.tr("\n","")
   if intial_letter.upcase == "ALL" || intial_letter.empty?
     return students
   else
@@ -75,15 +74,14 @@ def shorter_than12(students)
 end
 
 
-
 def cohort_sort(students)
   puts "Please type in a month to get the list of students from that cohort"
   puts "Type in 'all' to get the complete list with all student names"
   puts "Please remmeber if you hit return, you will get the default month cohort 'July'"
-  month = gets.chomp.capitalize.to_sym
+  month = gets.tr("\n","").capitalize.to_sym
   while (!@months.include?(month)) && (!month.empty?) && (month.to_s.upcase != "ALL") do
   puts "Please make sure that you enterd a correct full month"
-  month = gets.chomp.capitalize.to_sym
+  month = gets.tr("\n","").capitalize.to_sym
   end
   month = :July  if month.empty?
 
@@ -94,7 +92,6 @@ def cohort_sort(students)
   end
 #  to sort the sudents by their cohort: sorted_list = students.sort_by { |k| k[:cohort].to_s.upcase }
 end
-
 
 
 
