@@ -1,12 +1,24 @@
 #!/usr/bin/env ruby
+@months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
+
 def input_students
   students = []
   puts "Please enter the list of the students"
   puts "To finish, just hit return twice"
   puts "please enter the student's name:"
   name = gets.chomp
+  cohort = :July # default
 
   while !name.empty? do
+    puts "please enter the student's cohort, please type in a full month"
+    puts "please be aware: if you did not enter any month then the defualt month is 'July'"
+    cohort = gets.chomp.capitalize.to_sym
+    while (!@months.include?(cohort)) && (!cohort.empty?) do
+    puts "Please make sure that you enterd a correct full month"
+    cohort = gets.chomp.capitalize.to_sym
+    end
+    cohort = :July  if cohort.empty?
+
     puts "please enter the student's hobbies"
     hobbies = gets.chomp
     puts "please enter the student's place of birth"
@@ -14,7 +26,7 @@ def input_students
     puts "please enter the student's hieght"
     hieght = gets.chomp
 
-    students << {name: name, cohort: :november, hobbies: hobbies, place_of_birth: place_of_birth, hieght: hieght}
+    students << {name: name, cohort: cohort, hobbies: hobbies, place_of_birth: place_of_birth, hieght: hieght}
     puts "Now we have #{students.count} students"
 
     puts "please enter the student's name:"
@@ -64,7 +76,6 @@ end
 
 
 def print(students)
-  #command line window should be wide (expanded)
   line_width = 25
   puts "   " +"Name".ljust(line_width) + "Cohort".center(line_width) + "Hobbies".center(line_width) + "Place of Birth".center(line_width) + "Hieght".center(line_width)
   puts
