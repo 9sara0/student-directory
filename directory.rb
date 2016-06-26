@@ -42,6 +42,18 @@ def slected_first_letter_names(students)
     end
 end
 
+def shorter_than12(students)
+
+  names_less_than12 = []
+  students.each do |student|
+    if student[:name].length < 12
+      names_less_than12 << student
+    end
+  end
+  return names_less_than12
+end
+
+
 def print(students)
   students.each_with_index() {|student, index| puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"}
 end
@@ -52,5 +64,5 @@ end
 
 students = input_students
 print_header
-print(slected_first_letter_names(students))
+print(shorter_than12(students))
 print_footer(students)
