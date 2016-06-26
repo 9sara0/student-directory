@@ -62,11 +62,18 @@ def shorter_than12(students)
 end
 
 
+
 def print(students)
+  #command line window should be wide (expanded)
+  line_width = 25
+  puts "   " +"Name".ljust(line_width) + "Cohort".center(line_width) + "Hobbies".center(line_width) + "Place of Birth".center(line_width) + "Hieght".center(line_width)
+  puts
   students.each_with_index() do |student, index|
-    puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort) (hobbies: #{student[:hobbies]}) (place of birth: #{student[:place_of_birth]}) (hieght: #{student[:hieght]})"
+    puts "#{index + 1}. #{student[:name].ljust(line_width)}#{student[:cohort].to_s.center(line_width)}#{student[:hobbies].center(line_width)}#{student[:place_of_birth].center(line_width)}#{student[:hieght].center(line_width)}"
   end
 end
+
+
 
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
