@@ -27,7 +27,8 @@ def input_students
     hieght = gets.chomp
 
     students << {name: name, cohort: cohort, hobbies: hobbies, place_of_birth: place_of_birth, hieght: hieght}
-    puts "Now we have #{students.count} students"
+
+    puts students.count == 1? "Now we have #{students.count} student" : "Now we have #{students.count} students"
 
     puts "please enter the student's name:"
     name = gets.chomp
@@ -74,6 +75,7 @@ def shorter_than12(students)
 end
 
 
+
 def cohort_sort(students)
   puts "Please type in a month to get the list of students from that cohort"
   puts "Type in 'all' to get the complete list with all student names"
@@ -97,7 +99,6 @@ end
 
 
 
-
 def print(students)
   line_width = 25
   puts "   " +"Name".ljust(line_width) + "Cohort".center(line_width) + "Hobbies".center(line_width) + "Place of Birth".center(line_width) + "Hieght".center(line_width)
@@ -110,10 +111,10 @@ end
 
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  puts students.count == 1? "Overall, we have #{students.count} great student" : "Overall, we have #{students.count} great students"
 end
 
 students = input_students
 print_header
-print(cohort_sort(students))
+print(students)
 print_footer(students)
