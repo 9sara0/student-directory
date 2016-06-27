@@ -6,8 +6,8 @@
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a file"
+  puts "4. Load the list from a file"
   puts "9. Exit"
 end
 
@@ -19,9 +19,9 @@ def process(selection)
   when "2"
     show_students
   when "3"
-    save_student
+    save_student(get_filename("save"))
   when "4"
-    load_students
+    load_students(get_filename("load"))
   when "9"
     exit
   else
@@ -39,6 +39,8 @@ def ask_user_for_cohort
   puts "please enter the student's cohort, please type in a full month"
   puts "please be aware: if you did not enter any month then the defualt month is 'July'"
 end
+
+
 
 def user_input
   STDIN.gets.chomp
@@ -100,14 +102,24 @@ def print_footer
 end
 
 
+def ask_user_for_filename (option)
+  puts "Where do you want to #{option} it?"      if option == "save"
+  puts "From where do you want to #{option} it?" if option == "load"
+  puts "Please type in the file name with its extension"
+end
+
+def get_filename(option)
+  ask_user_for_filename(option)
+  user_input
+end
+
 def save_load_feedbak(option)
   puts "#{option} was done successfully"
 end
 
 
-def save_student
-  initial_count = @students.count
-  file = File.open("students.csv", "w")
+def save_student(filename = "students.csv")
+  file = File.open(filename, "w")
   initial_count = @students.count
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -139,6 +151,8 @@ def try_load_students
     exit
   end
 end
+
+
 
 def update_students(name, cohort = :July)
   @students << {name: name, cohort: cohort}
