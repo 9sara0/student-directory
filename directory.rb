@@ -20,7 +20,7 @@ def input_students
     end
     cohort = :July  if cohort.empty?
 
-    @students << {name: name, cohort: cohort}
+    update_students(name, cohort)
     puts @students.count == 1? "Now we have #{@students.count} student" : "Now we have #{@students.count} students"
 
     puts "please enter the student's name:"
@@ -43,7 +43,6 @@ def print_students_list
     line_width = 25
     puts "   " +"Name".ljust(line_width) + "Cohort".center(line_width)
     puts
-    puts
     @students.each_with_index() do |student, index|
       puts "#{index + 1}. #{student[:name].ljust(line_width)}#{student[:cohort].to_s.center(line_width)}"
     end
@@ -54,6 +53,7 @@ def print_students_list
 
 def print_footer
   puts @students.count == 1? "Overall, we have #{@students.count} great student" : "Overall, we have #{@students.count} great students"
+  puts
 end
 
 
@@ -107,7 +107,7 @@ def load_students(filename = "students.csv")
   file = File.open("students.csv", "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    update_students(name, cohort.to_sym)
   end
   file.close
 end
@@ -122,6 +122,10 @@ def try_load_students
     puts "Sorry, #{filename} does not exist."
     exit
   end
+end
+
+def update_students(name, cohort = :July)
+  @students << {name: name, cohort: cohort}
 end
 
 def interactive_menu
