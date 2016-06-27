@@ -104,7 +104,7 @@ def save_student
 end
 
 def load_students(filename = "students.csv")
-  file = File.open("students.csv", "r")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     update_students(name, cohort.to_sym)
@@ -112,9 +112,9 @@ def load_students(filename = "students.csv")
   file.close
 end
 
-def try_load_students
+def try_load_students(default_filename = "students.csv")
   filename = ARGV.first
-  return if filename.nil?
+  filename = default_filename if filename.nil?
   if File.exist? (filename)
     load_students(filename)
     puts "Loaded #{@students.count} students, from #{filename}."
