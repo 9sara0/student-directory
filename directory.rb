@@ -119,24 +119,23 @@ end
 
 
 def save_student(filename = "students.csv")
-  file = File.open(filename, "w")
-  initial_count = @students.count
+  File.open(filename, "w") do |file|
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
+    csv_line = student_data.join(',')
     file.puts csv_line
   end
-  file.close
+  end
   save_load_feedbak("save")
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
+  File.open(filename, "r") do |file|
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     update_students(name, cohort.to_sym)
   end
-  file.close
+  end
   save_load_feedbak("load")
 end
 
