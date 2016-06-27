@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'csv'
 @months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
 @students = []
 
@@ -119,22 +120,20 @@ end
 
 
 def save_student(filename = "students.csv")
-  File.open(filename, "w") do |file|
+  CSV.open(filename, "a+") do |csv|
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(',')
-    file.puts csv_line
+    csv << [student[:name], student[:cohort]]
   end
   end
   save_load_feedbak("save")
 end
 
+
+
 def load_students(filename = "students.csv")
-  File.open(filename, "r") do |file|
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
+  CSV.foreach(filename) do |line|
+    name, cohort = line.join(',').chomp.split(',')
     update_students(name, cohort.to_sym)
-  end
   end
   save_load_feedbak("load")
 end
