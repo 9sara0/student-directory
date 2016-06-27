@@ -3,39 +3,82 @@
 @students = []
 
 
-def input_students
-  puts "Please enter the list of the students"
-  puts "To finish, just hit return twice"
-  puts "please enter the student's name:"
-  name = STDIN.gets.chomp
-  cohort = :July # default
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
+  puts "9. Exit"
+end
 
-  while !name.empty? do
-    puts "please enter the student's cohort, please type in a full month"
-    puts "please be aware: if you did not enter any month then the defualt month is 'July'"
-    cohort = STDIN.gets.chomp.capitalize.to_sym
-    while (!@months.include?(cohort)) && (!cohort.empty?) do
-    puts "Please make sure that you enterd a correct full month"
-    cohort = STDIN.gets.chomp.capitalize.to_sym
-    end
-    cohort = :July  if cohort.empty?
 
-    update_students(name, cohort)
-    puts @students.count == 1? "Now we have #{@students.count} student" : "Now we have #{@students.count} students"
-
-    puts "please enter the student's name:"
-    name = STDIN.gets.chomp
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "3"
+    save_student
+  when "4"
+    load_students
+  when "9"
+    exit
+  else
+    puts "I don't know what you meant, try again"
   end
 end
 
 
+def ask_user_for_names
+  puts "please enter the student's name:"
+  puts "To finish, just hit return twice"
+end
+
+def ask_user_for_cohort
+  puts "please enter the student's cohort, please type in a full month"
+  puts "please be aware: if you did not enter any month then the defualt month is 'July'"
+end
+
+def user_input
+  STDIN.gets.chomp  
+end
+
+def input_students
+  ask_user_for_names
+  name = user_input
+  cohort = :July # default
+
+  while !name.empty? do
+    ask_user_for_cohort
+    cohort = user_input.capitalize.to_sym
+    while (!@months.include?(cohort)) && (!cohort.empty?) do
+    puts "Please make sure that you enterd a correct full month"
+    cohort = user_input.capitalize.to_sym
+    end
+    cohort = :July  if cohort.empty?
+
+    update_students(name, cohort)
+
+    puts @students.count == 1? "Now we have #{@students.count} student" : "Now we have #{@students.count} students"
+
+    ask_user_for_names
+    name = user_input
+  end
+end
+
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
 
 
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
-
 
 
 def print_students_list
@@ -58,40 +101,6 @@ end
 
 
 
-
-
-def print_menu
-  puts "1. Input the students"
-  puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
-  puts "9. Exit"
-end
-
-
-def show_students
-  print_header
-  print_students_list
-  print_footer
-end
-
-
-def process(selection)
-  case selection
-  when "1"
-    input_students
-  when "2"
-    show_students
-  when "3"
-    save_student
-  when "4"
-    load_students
-  when "9"
-    exit
-  else
-    puts "I don't know what you meant, try again"
-  end
-end
 
 def save_student
   file = File.open("students.csv", "w")
@@ -131,7 +140,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(STDIN.gets.chomp)
+    process(user_input)
   end
 end
 
