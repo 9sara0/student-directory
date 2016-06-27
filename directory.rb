@@ -2,20 +2,21 @@
 @months = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
 @students = []
 
+
 def input_students
   puts "Please enter the list of the students"
   puts "To finish, just hit return twice"
   puts "please enter the student's name:"
-  name = gets.chomp
+  name = STDIN.gets.chomp
   cohort = :July # default
 
   while !name.empty? do
     puts "please enter the student's cohort, please type in a full month"
     puts "please be aware: if you did not enter any month then the defualt month is 'July'"
-    cohort = gets.chomp.capitalize.to_sym
+    cohort = STDIN.gets.chomp.capitalize.to_sym
     while (!@months.include?(cohort)) && (!cohort.empty?) do
     puts "Please make sure that you enterd a correct full month"
-    cohort = gets.chomp.capitalize.to_sym
+    cohort = STDIN.gets.chomp.capitalize.to_sym
     end
     cohort = :July  if cohort.empty?
 
@@ -23,9 +24,10 @@ def input_students
     puts @students.count == 1? "Now we have #{@students.count} student" : "Now we have #{@students.count} students"
 
     puts "please enter the student's name:"
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 end
+
 
 
 
@@ -101,7 +103,7 @@ def save_student
   file.close
 end
 
-def load_students
+def load_students(filename = "students.csv")
   file = File.open("students.csv", "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
@@ -110,11 +112,24 @@ def load_students
   file.close
 end
 
-def interactive_menu
-  loop do
-    print_menu
-    process(gets.chomp)
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exist? (filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} students, from #{filename}."
+  else
+    puts "Sorry, #{filename} does not exist."
+    exit
   end
 end
 
+def interactive_menu
+  loop do
+    print_menu
+    process(STDIN.gets.chomp)
+  end
+end
+
+try_load_students
 interactive_menu
