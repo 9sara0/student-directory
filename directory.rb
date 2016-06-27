@@ -41,7 +41,7 @@ def ask_user_for_cohort
 end
 
 def user_input
-  STDIN.gets.chomp  
+  STDIN.gets.chomp
 end
 
 def input_students
@@ -100,16 +100,22 @@ def print_footer
 end
 
 
+def save_load_feedbak(option)
+  puts "#{option} was done successfully"
+end
 
 
 def save_student
+  initial_count = @students.count
   file = File.open("students.csv", "w")
+  initial_count = @students.count
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
   file.close
+  save_load_feedbak("save")
 end
 
 def load_students(filename = "students.csv")
@@ -119,11 +125,12 @@ def load_students(filename = "students.csv")
     update_students(name, cohort.to_sym)
   end
   file.close
+  save_load_feedbak("load")
 end
 
-def try_load_students(default_filename = "students.csv")
+def try_load_students
   filename = ARGV.first
-  filename = default_filename if filename.nil?
+  filename = "students.csv" if filename.nil?
   if File.exist? (filename)
     load_students(filename)
     puts "Loaded #{@students.count} students, from #{filename}."
